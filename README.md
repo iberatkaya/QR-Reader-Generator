@@ -1,0 +1,2 @@
+# RNScanner
+QR Scanner App
