@@ -65,6 +65,7 @@
 		E3E2FDC5678A463E87314321 /* libRNCalendarEvents.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B1849D2E8F4333B9930E73 /* libRNCalendarEvents.a */; };
 		3A133E25D99148368D6E31C1 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA14E337B924A6695B70587 /* libRNImagePicker.a */; };
 		6192A77219374F68B70D5C2A /* libQRCode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C518E361649578040091C /* libQRCode.a */; };
+		73CC54B1F33742D3986ED51B /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94748EAC90A41E18ADDA3EB /* libRNFirebase.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -407,6 +408,8 @@
 		AAA14E337B924A6695B70587 /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		34847E8A197546DAAE4D850F /* QrCode.xcodeproj */ = {isa = PBXFileReference; name = "QrCode.xcodeproj"; path = "../node_modules/react-native-qr-scanner/ios/QrCode.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		326C518E361649578040091C /* libQRCode.a */ = {isa = PBXFileReference; name = "libQRCode.a"; path = "libQRCode.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		2115FB934C2F45A9A22C46FF /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; name = "RNFirebase.xcodeproj"; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		F94748EAC90A41E18ADDA3EB /* libRNFirebase.a */ = {isa = PBXFileReference; name = "libRNFirebase.a"; path = "libRNFirebase.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -444,6 +447,7 @@
 				E3E2FDC5678A463E87314321 /* libRNCalendarEvents.a in Frameworks */,
 				3A133E25D99148368D6E31C1 /* libRNImagePicker.a in Frameworks */,
 				6192A77219374F68B70D5C2A /* libQRCode.a in Frameworks */,
+				73CC54B1F33742D3986ED51B /* libRNFirebase.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +648,7 @@
 				A7FCABE328B24A8B97CA901D /* RNCalendarEvents.xcodeproj */,
 				02E99159495F4807987D0EC7 /* RNImagePicker.xcodeproj */,
 				34847E8A197546DAAE4D850F /* QrCode.xcodeproj */,
+				2115FB934C2F45A9A22C46FF /* RNFirebase.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1310,6 +1315,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/scanner2.app/scanner2";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1322,6 +1328,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-calendar-events",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-qr-scanner\ios\QrCode",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Debug;
@@ -1343,6 +1350,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/scanner2.app/scanner2";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1355,6 +1363,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-calendar-events",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-qr-scanner\ios\QrCode",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Release;
@@ -1386,6 +1395,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-calendar-events",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-qr-scanner\ios\QrCode",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Debug;
@@ -1416,6 +1426,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-calendar-events",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-qr-scanner\ios\QrCode",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Release;
@@ -1445,6 +1456,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1457,6 +1469,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-calendar-events",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-qr-scanner\ios\QrCode",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Debug;
@@ -1486,6 +1499,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1498,6 +1512,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-calendar-events",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-qr-scanner\ios\QrCode",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Release;
@@ -1526,6 +1541,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1538,6 +1554,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-calendar-events",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-qr-scanner\ios\QrCode",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Debug;
@@ -1566,6 +1583,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1578,6 +1596,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-calendar-events",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-qr-scanner\ios\QrCode",
+					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 				);
 			};
 			name = Release;

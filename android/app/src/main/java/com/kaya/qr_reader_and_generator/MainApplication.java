@@ -3,6 +3,7 @@ package com.kaya.qr_reader_and_generator;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 
 import com.lewin.qrcode.QRScanReaderPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -17,6 +18,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import org.pgsqlite.SQLitePluginPackage;
+import io.invertase.firebase.admob.RNFirebaseAdMobPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
             new QRScanReaderPackage(),
             new ImagePickerPackage(),
             new CalendarEventsPackage(),
@@ -41,7 +44,8 @@ public class MainApplication extends Application implements ReactApplication {
             new SQLitePluginPackage(),
             new AsyncStoragePackage(),
             new VectorIconsPackage(),
-            new RNGestureHandlerPackage()
+            new RNGestureHandlerPackage(),
+            new RNFirebaseAdMobPackage()
       );
     }
 

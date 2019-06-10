@@ -1,10 +1,16 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ToastAndroid, Alert, StatusBar, PermissionsAndroid} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
-//import AdMobInterstitial from 'react-native-admob@next';
 import { openDatabase } from 'react-native-sqlite-storage';
 const db = openDatabase({name: "Scanned.db", location: 'default'});
-import {adunitid} from './appid';
+import {adunitid, myappid} from './appid';
+import firebase from "react-native-firebase";
+
+firebase.admob().initialize(myappid);
+const advert = firebase.admob().interstitial(adunitid/*'ca-app-pub-3940256099942544/1033173712'*/);
+const AdRequest = firebase.admob.AdRequest;
+const request = new AdRequest();
+advert.loadAd(request.build());
 
 var showad = 0;
 
@@ -35,8 +41,6 @@ export default class HomeScreen extends React.Component {
     db.transaction(tx => {
         tx.executeSql('CREATE TABLE IF NOT EXISTS QRS (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, value TEXT);', [], (tx, res) => {}, () => {});    
     });
-   // AdMobInterstitial.setAdUnitID(/*adunitid);*/"ca-app-pub-3940256099942544/1033173712");
-    //AdMobInterstitial.setTestDeviceID('EMULATOR');
   }
 
 
@@ -50,7 +54,7 @@ export default class HomeScreen extends React.Component {
             onPress={async () => {
               showad++;  
               if(showad == 2 || showad == 5 || showad == 8){      
-      //          AdMobInterstitial.requestAd(AdMobInterstitial.showAd);
+                advert.show();
               }
               await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA).then((res) => {
                 if(res == 'granted')
@@ -67,7 +71,7 @@ export default class HomeScreen extends React.Component {
               onPress={() => {
                 showad++;
                 if(showad == 2 || showad == 5 || showad == 8){
-        //          AdMobInterstitial.requestAd(AdMobInterstitial.showAd);
+                  advert.show();
                 }
                 this.props.navigation.navigate("QRGenerator");
               }}>
@@ -80,11 +84,4 @@ export default class HomeScreen extends React.Component {
         </View>
     );
   }
-}
-/*
-*/
-
-
-function getPerm() {
-  Permissions.request('camera');
 }
