@@ -1,8 +1,9 @@
-package com.scanner2;
+package com.kaya.qr_reader_and_generator;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+
 import com.lewin.qrcode.QRScanReaderPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.calendarevents.CalendarEventsPackage;

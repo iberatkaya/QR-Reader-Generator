@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.scanner2",
+    package = "com.kaya.qr_reader_and_generator",
 )
 
 android_resource(
     name = "res",
-    package = "com.scanner2",
+    package = "com.kaya.qr_reader_and_generator",
     res = "src/main/res",
 )
 

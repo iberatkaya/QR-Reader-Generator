@@ -1,4 +1,4 @@
-package com.scanner2;
+package com.kaya.qr_reader_and_generator;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -13,7 +13,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "scanner2";
+        return "QRReaderandGenerator";
     }
 
     @Override

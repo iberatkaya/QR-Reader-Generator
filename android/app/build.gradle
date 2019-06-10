@@ -103,12 +103,13 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.scanner2"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        applicationId "com.kaya.qr_reader_and_generator"
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         missingDimensionStrategy 'react-native-camera', 'general'
+
     }
     splits {
         abi {

@@ -48,10 +48,9 @@ const DrawNavigator = createDrawerNavigator({
     drawerWidth: width * 0.8,
     contentComponent: (props) => (
       <View>
-        <View style = {{backgroundColor: 'skyblue', height: 24}}></View>
-          <Image 
-            source = {require('./assets/qrflogo.png')}
-            style={{width: width * 0.8, height: height * 0.25}}
+        <Image 
+          source = {require('./assets/qrflogo.png')}
+          style={{width: width * 0.8, height: height * 0.25}}
         />
         <ScrollView>
           <DrawerItems {...props} 

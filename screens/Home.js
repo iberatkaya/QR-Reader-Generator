@@ -1,12 +1,14 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ToastAndroid, Alert, PermissionsAndroid} from "react-native";
+import { View, Text, TouchableOpacity, ToastAndroid, Alert, StatusBar, PermissionsAndroid} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
-//import { AdMobInterstitial } from 'react-native-admob';
+//import AdMobInterstitial from 'react-native-admob@next';
 import { openDatabase } from 'react-native-sqlite-storage';
 const db = openDatabase({name: "Scanned.db", location: 'default'});
 import {adunitid} from './appid';
 
 var showad = 0;
+
+//adb reverse tcp:8081 tcp:8081
 
 export default class HomeScreen extends React.Component { 
 
@@ -33,32 +35,22 @@ export default class HomeScreen extends React.Component {
     db.transaction(tx => {
         tx.executeSql('CREATE TABLE IF NOT EXISTS QRS (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, value TEXT);', [], (tx, res) => {}, () => {});    
     });
-  /*  AdMobInterstitial.setAdUnitID(adunitid);"ca-app-pub-3940256099942544/1033173712");
-    AdMobInterstitial.setTestDeviceID("EMULATOR");
-    AdMobInterstitial.addEventListener("interstitialDidClose", () => {
-      }
-    );*/
-}
-  /*
-  componentWillUnmount() {
-    AdMobInterstitial.removeAllListeners();
+   // AdMobInterstitial.setAdUnitID(/*adunitid);*/"ca-app-pub-3940256099942544/1033173712");
+    //AdMobInterstitial.setTestDeviceID('EMULATOR');
   }
 
-  async showInterstitial() {
-    await AdMobInterstitial.requestAd().then(async () =>  {
-      await AdMobInterstitial.showAd();
-    });
-  }
-*/
+
   render() {
     return (
+      <View style = {{flex: 1}}>
+        <StatusBar backgroundColor = "rgba(105, 156, 195, 1)" />
         <View style={{ flex: 1, alignItems: "stretch"}}>
           <TouchableOpacity
             style = {{flex: 1, backgroundColor: "rgba(255, 140, 140, 0.7)"}} 
             onPress={async () => {
               showad++;  
-              if(showad == 2 || showad == 5 || showad == 8){
-    //            this.showInterstitial();
+              if(showad == 2 || showad == 5 || showad == 8){      
+      //          AdMobInterstitial.requestAd(AdMobInterstitial.showAd);
               }
               await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA).then((res) => {
                 if(res == 'granted')
@@ -75,7 +67,7 @@ export default class HomeScreen extends React.Component {
               onPress={() => {
                 showad++;
                 if(showad == 2 || showad == 5 || showad == 8){
-      //            this.showInterstitial();
+        //          AdMobInterstitial.requestAd(AdMobInterstitial.showAd);
                 }
                 this.props.navigation.navigate("QRGenerator");
               }}>
@@ -85,6 +77,7 @@ export default class HomeScreen extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
+        </View>
     );
   }
 }
