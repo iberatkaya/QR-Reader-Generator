@@ -1,25 +1,26 @@
 import React from "react";
 import { View, Text, Picker, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
-import {AsyncStorage} from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class SettingsScreen extends React.Component {
 
     _retrieveData = async () => {
         try{
-             value = await AsyncStorage.getItem('ShowHint');
-            if (value !== null) {
-                return value;
-            }
-            else{
-                return "Yes";
-            }
+            value = await AsyncStorage.getItem('ShowHint');
+          if (value !== null) {
+              return value;
+          }
+          else{
+              return "Yes";
+          }
         } catch (error) {
         }
     };
 
     _storeData = async (choise) => {
+      console.log(choise);
         try {
           await AsyncStorage.setItem('ShowHint', choise);
         } catch (error) {
@@ -44,19 +45,6 @@ export default class SettingsScreen extends React.Component {
     title: 'Settings',
     headerStyle: {backgroundColor: 'skyblue', elevation: 2},
     headerTintColor: '#fff',
-    headerLeft: (
-      <TouchableOpacity 
-        onPress = {()=>{
-          navigation.toggleDrawer();
-        }}
-      >
-        <Icon 
-          style = {{paddingLeft: 12}}
-          size = {32}
-          name = "menu"
-        />
-      </TouchableOpacity>
-    )
   });
 
 
@@ -66,7 +54,7 @@ export default class SettingsScreen extends React.Component {
                 <View style = {{flexDirection: 'row', paddingTop: 10, paddingBottom: 8}}>
                     <Text style = {{alignSelf: 'center', fontSize: 18, paddingLeft: 18}}>Show Hint: </Text>
                     <Picker
-                        style = {{width: 90, alignSelf: 'center'}}
+                        style = {{width: 100, alignSelf: 'center'}}
                         selectedValue = {this.state.showHint}       
                         onValueChange = {(itemVal, itemindex) => {
                             this._storeData(itemVal);

@@ -3,14 +3,14 @@ import { View, Text, TouchableOpacity, ToastAndroid, Alert, StatusBar, Permissio
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
 import { openDatabase } from 'react-native-sqlite-storage';
 const db = openDatabase({name: "Scanned.db", location: 'default'});
+import SplashScreen from 'react-native-splash-screen';
 import {adunitid, myappid} from './appid';
 import firebase from "react-native-firebase";
 
 firebase.admob().initialize(myappid);
-const advert = firebase.admob().interstitial(adunitid/*'ca-app-pub-3940256099942544/1033173712'*/);
+const advert = firebase.admob().interstitial(/*adunitid);*/'ca-app-pub-3940256099942544/1033173712');
 const AdRequest = firebase.admob.AdRequest;
 const request = new AdRequest();
-advert.loadAd(request.build());
 
 var showad = 0;
 
@@ -41,6 +41,8 @@ export default class HomeScreen extends React.Component {
     db.transaction(tx => {
         tx.executeSql('CREATE TABLE IF NOT EXISTS QRS (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, value TEXT);', [], (tx, res) => {}, () => {});    
     });
+    advert.loadAd(request.build());
+    SplashScreen.hide();
   }
 
 
@@ -53,9 +55,8 @@ export default class HomeScreen extends React.Component {
             style = {{flex: 1, backgroundColor: "rgba(255, 140, 140, 0.7)"}} 
             onPress={async () => {
               showad++;  
-              if(showad == 2 || showad == 5 || showad == 8){      
+              if(showad == 2 || showad == 5 || showad == 8)   
                 advert.show();
-              }
               await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA).then((res) => {
                 if(res == 'granted')
                   this.props.navigation.navigate("QRScan");

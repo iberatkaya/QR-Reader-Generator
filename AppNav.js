@@ -12,8 +12,11 @@ import HistoryScreen from './screens/History';
 
 const { width, height } = Dimensions.get('screen');
 
+
 const AppNavigator = createStackNavigator({ 
   Home: HomeScreen,
+  Settings: SettingsScreen,
+  History: HistoryScreen,
   QRScan: QRScanScreen,
   QRScanResult: QRScanResultScreen,
   QRGenerator: QRGeneratorScreen,
@@ -27,7 +30,7 @@ const DrawNavigator = createDrawerNavigator({
     navigationOptions : {
       drawerIcon: () => <Icon name = "home" size = {24} color = "#444444" />,
       drawerLabel: "Home"
-    }
+    },
   },
   History: {
     screen: createStackNavigator({HistoryScreen}),
@@ -104,4 +107,17 @@ AppNavigator.navigationOptions = ({ navigation }) => {  //Locks drawer when not 
   };
 };
 
-export default createAppContainer(DrawNavigator);
+const Enter = createStackNavigator({
+  Home: {
+    screen: DrawNavigator,
+    navigationOptions: {
+      header: null,
+      headerStyle: {
+        backgroundColor: 'rgb(105, 156, 195)',
+      },
+    }
+  }
+});
+
+
+export default createAppContainer(Enter);

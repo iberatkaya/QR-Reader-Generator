@@ -73,7 +73,8 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+    entryFile: "index.js",
+    bundleCommand: "ram-bundle"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -92,7 +93,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -101,13 +102,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     defaultConfig {
         applicationId "com.kaya.qr_reader_and_generator"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 3145751
+        versionName "0.5.3.6.1"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     signingConfigs {
@@ -151,6 +151,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-splash-screen')
     implementation project(':react-native-firebase')
     implementation project(':react-native-qr-scanner')
     implementation project(':react-native-image-picker')

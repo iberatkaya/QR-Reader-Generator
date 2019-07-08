@@ -21,19 +21,6 @@ export default class HistoryScreen extends React.Component {
         title: 'History',
         headerStyle: {backgroundColor: 'skyblue', elevation: 2},
         headerTintColor: '#fff',
-        headerLeft: (
-          <TouchableOpacity 
-            onPress = {()=>{
-              navigation.toggleDrawer();
-            }}
-          >
-            <Icon 
-              style = {{paddingLeft: 12}}
-              size = {32}
-              name = "menu"
-            />
-          </TouchableOpacity>
-        )
       });
     
 
@@ -70,15 +57,10 @@ export default class HistoryScreen extends React.Component {
                 <FlatList
                     data = {this.state.hisdata}
                     keyExtractor = {(item, index) => index.toString()}
-                    ItemSeparatorComponent = {() => {
-                        return(
-                            <View style = {{height: 1, backgroundColor: 'rgba(20, 20, 20, 0.3)'}}></View>
-                        );
-                    }}
                     renderItem = {({item}) => {
                         return (
-                                <View>
-                                    <View style = {{alignItems: 'center', justifyContent: 'center',flexDirection: 'row', backgroundColor: 'rgba(180, 180, 250, 0.3)'}}>
+                                <View style = {{marginVertical: 3, marginHorizontal: 2}}>
+                                    <View style = {{borderTopLeftRadius: 12, borderTopRightRadius: 12, alignItems: 'center', justifyContent: 'center',flexDirection: 'row', backgroundColor: 'rgba(180, 180, 250, 0.3)'}}>
                                         <Text style = {{color: "red", fontSize: 30, paddingBottom: 12, paddingTop: 10, fontFamily: 'sans-serif-light'}}>{item.type}</Text>
                                         <Icon style = {{position: 'absolute', right: 8}} name = "delete" size = {26} 
                                             onPress = {() => {
@@ -100,7 +82,7 @@ export default class HistoryScreen extends React.Component {
                                             }}
                                         />
                                     </View>
-                                    <View style = {{paddingHorizontal: 8, paddingTop: 12, paddingBottom: 14, backgroundColor: 'rgba(250, 180, 180, 0.3)'}}>
+                                    <View style = {{borderBottomLeftRadius: 12, borderBottomRightRadius: 12,paddingHorizontal: 8, paddingTop: 12, paddingBottom: 14, backgroundColor: 'rgba(250, 180, 180, 0.3)'}}>
                                         <AutoLink style = {{fontSize: 19, color: 'black'}} text = {item.value}/>
                                     </View>
                                 </View>

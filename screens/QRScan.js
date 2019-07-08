@@ -1,13 +1,15 @@
 import React from "react";
-import { View, Text, TouchableOpacity, AsyncStorage, Alert, PermissionsAndroid } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions, PermissionsAndroid, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
 import {RNCamera} from 'react-native-camera';
-   
+import AsyncStorage from '@react-native-community/async-storage';
+
+var {width, height} = Dimensions.get('screen');
 
 export default class QRScanScreen extends React.Component{ 
   constructor(props){
     super(props);
-    this.state = {text: "", backgroundColor: 'transparent', showHint: '', displaytext: ''};
+    this.state = {text: "", showHint: '', displaytext: '', sendobj: {}, overlaycolor: 'white', opacity: 0, type: ''};
   }
 
   static navigationOptions = ({ navigation })=>{
@@ -23,7 +25,6 @@ export default class QRScanScreen extends React.Component{
             await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE).then((res) => {
               if(res == 'granted')
                 navigate("QRScanGallery");
-              
             });
           }}
           style = {{paddingRight: 12}}
@@ -37,6 +38,7 @@ export default class QRScanScreen extends React.Component{
   _retrieveData = async () => {
     try{
       value = await AsyncStorage.getItem('ShowHint');
+      console.log(value);
       if (value !== null) {
           return value;
       }
@@ -51,10 +53,10 @@ export default class QRScanScreen extends React.Component{
   
   componentDidMount(){
     this._retrieveData().then((value)=>{
-      if(value == "No"){
-        this._touch.setNativeProps({opacity: 0});
-        this.setState({showHint: "No"});
-        }
+      console.log("value");
+      console.log(value);
+      console.log("value");
+      this.setState({showHint: value});
       //  console.log("mount " + value);
     });
   }
@@ -308,124 +310,35 @@ export default class QRScanScreen extends React.Component{
                 text: text,
                 displaytext: sendtext,
                 icon: icon,
-                backgroundColor: 'rgba(255, 120, 120, 0.5)'
+                sendobj: sendobj,
+                type: type,
+                opacity: 1,
+                backgroundColor: 'rgba(255, 120, 120, 0.5)',
+                overlaycolor: 'rgb(180, 255, 180)',
+              }, () => {
+                if(this.state.showHint == "No"){
+                  this.setState({overlaycolor: 'white', opacity: 0});
+                  this.props.navigation.navigate("QRScanResult", {textvalue: sendtext, type: type, icon: icon, obj: sendobj});
+                }
               });
-              
-              if(this.state.showHint == "No"){
-                this.props.navigation.navigate("QRScanResult", {textvalue: sendtext, type: type, icon: icon, obj: sendobj});
-              }
             }}
           > 
-          <TouchableOpacity
-            ref = {comp => this._touch = comp} 
-            onPress = {() =>{
-              var type = "Text";
-              var icon = "format-color-text";
-              var sendtext= this.state.text;
-              var sendobj = {};
-              if(this.state.text.includes("BEGIN:VCARD") && this.state.text.includes("END:VCARD")){
-                type = "Contact";
-                icon = "account-box-outline";
-                try{
-                  var cont = this.parseContact(this.state.text);
-                  sendtext = "";
-                  for(var prop in cont){
-                    if(prop != "BEGIN" && prop != "END" && prop != "N" && prop != "VERSION" && cont[prop] != ""){
-                      if(prop == "FN")
-                        sendtext += "Name: " + cont[prop] + "\n";
-                      else if(prop == "ORG")
-                        sendtext += "Organisation: " + cont[prop] + "\n";
-                      else if(prop == "ADR")
-                        sendtext += "Address:" + cont[prop] + "\n";
-                      else if(prop == "TEL WORK VOICE")
-                        sendtext += "Tel (Work): " + cont[prop] + "\n";
-                      else if(prop == "TEL HOME VOICE")
-                        sendtext += "Tel (Home): " + cont[prop] + "\n";
-                      else if(prop == "TEL CELL")
-                        sendtext += "Tel (Cell): " + cont[prop] + "\n";
-                      else if(prop == "TEL FAX")
-                        sendtext += "Tel (Fax): " + cont[prop] + "\n";
-                      else if(prop == "EMAIL WORK INTERNET")
-                        sendtext += "Email (Work): " + cont[prop] + "\n";
-                      else if(prop == "EMAIL HOME INTERNET")
-                        sendtext += "Email (Home): " + cont[prop] + "\n";
-                      else if(prop == "URL")
-                        sendtext += "Website: " + cont[prop] + "\n";
-                      else
-                        sendtext += prop + ": " + cont[prop] + "\n";
-                    }
-                  }
-                }catch(e){
-                  sendtext = e;
-                }
-              }
-              else if(this.state.text.includes("BEGIN:VEVENT") && this.state.text.includes("END:VEVENT")){
-                type = "Event";
-                icon = "calendar";
-                sendtext = "";
-                var obj = this.parseEvent(this.state.text);
-                for(var prop in obj){
-                  if(prop != "BEGIN" && prop != "END"){
-                    if(prop == "SUMMARY"){
-                      sendtext += "Event: " + obj[prop] + '\n'; 
-                    }
-                    else if(prop == "DTSTART"){
-                      sendtext += "Begin: " + obj[prop][6] + obj[prop][7] + "."  + obj[prop][4] + obj[prop][5] + "."  + obj[prop][0] + obj[prop][1] + obj[prop][2] + obj[prop][3] + '\n'; 
-                    }
-                    else if(prop == "DTEND"){
-                      sendtext += "End: " + obj[prop][6] + obj[prop][7] + "."  + obj[prop][4] + obj[prop][5] + "."  + obj[prop][0] + obj[prop][1] + obj[prop][2] + obj[prop][3] + '\n'; 
-                    }
-                    else
-                      sendtext += prop + ": " + obj[prop] + "\n";
-                  }
-                }
-                sendobj = obj;
-              }
-              else if(this.state.text.includes("MATMSG:")){
-                type = "Email";
-                icon = "email";
-                sendtext = "";
-                var obj = this.parseEmail(this.state.text);
-                for(var prop in obj){
-                  for(var prop in obj){
-                    if(obj[prop] != "")
-                      sendtext += prop + ": " + obj[prop] + '\n';
-                  }
-                }
-                sendobj = obj;
-              }
-              else if(this.state.text.includes("WIFI:") && this.state.text.includes(";S")){
-                type = "Wifi";
-                icon = "wifi";
-                sendtext = "";
-                var obj = this.parseWifi(this.state.text);
-                for(var prop in obj){
-                  if(obj[prop] != "")
-                    sendtext += prop + ": " + obj[prop] + '\n';
-                }
-              }
-              else if(this.state.text.includes("://") || this.state.text.includes("www.")){
-                type = "Link";
-                icon = "earth";
-              }
-              else if(this.state.text.includes("SMSTO:")){
-                type = "SMS";
-                icon = "message";
-                var obj = this.parseSMS(this.state.text);
-                sendtext = "";
-                for(var prop in obj)
-                  sendtext += prop + ": " + obj[prop] + '\n'; 
-                sendobj = obj;
-              }
-              else if(this.state.text.includes("tel:")){
-                type = "Number";
-                icon = "phone";
-                sendtext = "Number: " + this.parseNumber(this.state.text);
-                sendobj = {Number: this.parseNumber(this.state.text)};
-              }
-              this.props.navigation.navigate("QRScanResult", {textvalue: sendtext, type: type, icon: icon, obj: sendobj});
-            }} >
-              <View style = {{backgroundColor: this.state.backgroundColor, marginTop: 100, padding: 12, borderRadius: 16, maxHeight: 250, maxWidth: 220, overflow: 'hidden'}} >
+          
+          <Image source = {require("../assets/cameraoverlaythin.png")} 
+            style = {{position: 'absolute', resizeMode: 'contain', tintColor: this.state.overlaycolor}}
+            width = {width * 0.95}
+            height = {height * 0.95}
+            />
+
+            <TouchableOpacity
+              onPress = {() =>{
+                console.log(JSON.stringify(this.state));
+                this.setState({overlaycolor: 'white', text: "", opacity: 0});
+                var text = this.state.sendtext;
+                console.log(text);
+                this.props.navigation.navigate("QRScanResult", {textvalue: this.state.displaytext, type: this.state.type, icon: this.state.icon, obj: this.state.sendobj});
+              }} >
+              <View style = {{backgroundColor: "rgba(250, 120, 120, 0.4)", opacity: this.state.opacity, marginTop: 100, padding: 12, borderRadius: 16, maxHeight: 250, maxWidth: 220, overflow: 'hidden'}} >
                 <Text style = {{fontSize: 18, color: '#000000'}}>{this.state.displaytext}</Text>
               </View>
             </TouchableOpacity>
