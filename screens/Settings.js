@@ -1,74 +1,74 @@
 import React from "react";
 import { View, Text, Picker, TouchableOpacity } from "react-native";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class SettingsScreen extends React.Component {
 
     _retrieveData = async () => {
-        try{
+        try {
             value = await AsyncStorage.getItem('ShowHint');
-          if (value !== null) {
-              return value;
-          }
-          else{
-              return "Yes";
-          }
+            if (value !== null) {
+                return value;
+            }
+            else {
+                return "Yes";
+            }
         } catch (error) {
         }
     };
 
     _storeData = async (choise) => {
-      console.log(choise);
+        console.log(choise);
         try {
-          await AsyncStorage.setItem('ShowHint', choise);
+            await AsyncStorage.setItem('ShowHint', choise);
         } catch (error) {
-          // Error saving data
+            // Error saving data
         }
-      };
+    };
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             showHint: 'a'
         }
     }
 
-    componentDidMount(){
-        this._retrieveData().then((value)=>{
-            this.setState({showHint: value});
+    componentDidMount() {
+        this._retrieveData().then((value) => {
+            this.setState({ showHint: value });
         });
     }
-    
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Settings',
-    headerStyle: {backgroundColor: 'skyblue', elevation: 2},
-    headerTintColor: '#fff',
-  });
+
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Settings',
+        headerStyle: { backgroundColor: 'skyblue', elevation: 2 },
+        headerTintColor: '#fff',
+    });
 
 
-    render(){
-        return(
+    render() {
+        return (
             <View>
-                <View style = {{flexDirection: 'row', paddingTop: 10, paddingBottom: 8}}>
-                    <Text style = {{alignSelf: 'center', fontSize: 18, paddingLeft: 18}}>Show Hint: </Text>
+                <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 8 }}>
+                    <Text style={{ alignSelf: 'center', fontSize: 18, paddingLeft: 18 }}>Show Hint: </Text>
                     <Picker
-                        style = {{width: 100, alignSelf: 'center'}}
-                        selectedValue = {this.state.showHint}       
-                        onValueChange = {(itemVal, itemindex) => {
+                        style={{ width: 100, alignSelf: 'center' }}
+                        selectedValue={this.state.showHint}
+                        onValueChange={(itemVal, itemindex) => {
                             this._storeData(itemVal);
-                            this.setState({showHint: itemVal});
+                            this.setState({ showHint: itemVal });
                         }}
                     >
-                        <Picker.Item label = "Yes" value = "Yes" />
-                        <Picker.Item label = "No" value = "No" />
+                        <Picker.Item label="Yes" value="Yes" />
+                        <Picker.Item label="No" value="No" />
                     </Picker>
                 </View>
                 <View
-                style={{
-                    borderBottomColor: 'rgba(40, 40, 40, 0.15)',
-                    borderBottomWidth: 1,
+                    style={{
+                        borderBottomColor: 'rgba(40, 40, 40, 0.15)',
+                        borderBottomWidth: 1,
                     }}
                 />
             </View>

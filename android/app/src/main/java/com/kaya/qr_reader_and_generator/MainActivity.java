@@ -3,6 +3,7 @@ package com.kaya.qr_reader_and_generator;
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
 
+//import com.facebook.react.ReactFragmentActivity;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
@@ -19,6 +20,7 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this, R.style.SplashScreenTheme);  // here
         super.onCreate(savedInstanceState);
+//        super.onCreate(null);
     }
 
     @Override
