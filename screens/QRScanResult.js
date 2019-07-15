@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, ScrollView, Alert, TouchableOpacity, ToastAndroid, PermissionsAndroid, Linking } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AutoLink from 'react-native-autolink';
-import { openDatabase } from 'react-native-sqlite-storage';
 import RNCalendarEvents from 'react-native-calendar-events';
-const db = openDatabase({ name: "Scanned.db", location: 'default' });
+import SQLite from 'react-native-sqlite-2';
+const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 
 export default class QRScanResultScreen extends React.Component {
 

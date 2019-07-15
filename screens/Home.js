@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ToastAndroid, Alert, StatusBar, PermissionsAndroid } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { openDatabase } from 'react-native-sqlite-storage';
-const db = openDatabase({ name: "Scanned.db", location: 'default' });
+import SQLite from 'react-native-sqlite-2';
+const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 import SplashScreen from 'react-native-splash-screen';
 import { adunitid, myappid } from './appid';
 import firebase from "react-native-firebase";
@@ -54,6 +54,7 @@ export default class HomeScreen extends React.Component {
           <TouchableOpacity
             style={{ flex: 1, backgroundColor: "rgba(255, 140, 140, 0.7)" }}
             onPress={async () => {
+              console.log((global.HermesInternal != null).toString());
               showad++;
               if (showad == 2 || showad == 5 || showad == 8)
                 advert.show();

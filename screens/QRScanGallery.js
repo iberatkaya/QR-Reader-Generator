@@ -1,12 +1,10 @@
 import React from "react";
 import { View, Text, ScrollView, ToastAndroid, Linking, PermissionsAndroid, Alert, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import jsQR from 'jsqr';
-import encode from 'base64-arraybuffer';
 import { QRreader } from 'react-native-qr-scanner';
 import ImagePicker from 'react-native-image-picker';
-import { openDatabase } from 'react-native-sqlite-storage';
-const db = openDatabase({ name: "Scanned.db", location: 'default' });
+import SQLite from 'react-native-sqlite-2';
+const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 import AutoLink from 'react-native-autolink';
 
 
@@ -45,10 +43,6 @@ export default class QRScanGalleryScreen extends React.Component {
       )
     };
   };
-  /*
-      componentWillUnmount() {        //Fixes memory leak
-          this.isCancelled = true;
-      }*/
 
   _pickimg = async () => {
     await ImagePicker.launchImageLibrary({}, (res) => {

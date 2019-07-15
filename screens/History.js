@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, Text, View, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
-import { openDatabase } from 'react-native-sqlite-storage';
-const db = openDatabase({ name: "Scanned.db", location: 'default' });
+import SQLite from 'react-native-sqlite-2';
+const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 import { NavigationEvents } from 'react-navigation';
 import AutoLink from 'react-native-autolink';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
