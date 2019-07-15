@@ -90,12 +90,12 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -131,8 +131,8 @@ android {
         applicationId "com.kaya.qr_reader_and_generator"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 3145752
-        versionName "0.5.4"
+        versionCode 3145754
+        versionName "0.5.4.2"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     splits {

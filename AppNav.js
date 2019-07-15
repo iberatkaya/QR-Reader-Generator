@@ -20,7 +20,7 @@ const AppNavigator = createStackNavigator({
   QRScan: QRScanScreen,
   QRScanResult: QRScanResultScreen,
   QRGenerator: QRGeneratorScreen,
-  QRScanGallery: QRScanGalleryScreen,
+  //QRScanGallery: QRScanGalleryScreen,
 });
 
 
