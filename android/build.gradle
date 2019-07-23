@@ -21,6 +21,17 @@ buildscript {
     }
 }
 
+subprojects { project -> 
+  afterEvaluate {
+        if((project.plugins.hasPlugin('android') || project.plugins.hasPlugin('android-library'))) {
+            android {
+                compileSdkVersion rootProject.ext.compileSdkVersion
+                buildToolsVersion rootProject.ext.buildToolsVersion
+            }
+        }
+    }
+}
+
 allprojects {
     repositories {
         mavenLocal()

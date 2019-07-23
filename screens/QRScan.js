@@ -18,7 +18,7 @@ export default class QRScanScreen extends React.Component {
       title: 'Scan',
       headerStyle: { backgroundColor: 'skyblue', elevation: 2 },
       headerTintColor: '#fff',
-      /*headerRight: (
+      headerRight: (
         <TouchableOpacity
           onPress={async () => {
             //getRollPerm(); implement
@@ -31,7 +31,7 @@ export default class QRScanScreen extends React.Component {
         >
           <Icon name="image" size={32} color="#ffffff" />
         </TouchableOpacity>
-      )*/
+      )
     }
   }
 

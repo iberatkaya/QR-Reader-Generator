@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, ToastAndroid, Linking, PermissionsAndroid, Alert, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-//import { QRreader } from 'react-native-qr-scanner';
+import { QRreader } from 'react-native-qr-scanner';
 import ImagePicker from 'react-native-image-picker';
 import SQLite from 'react-native-sqlite-2';
 const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
@@ -51,7 +51,7 @@ export default class QRScanGalleryScreen extends React.Component {
         if (!path) {
           path = res.uri;
         }
-   //     QRreader(path).then((x) => {
+        QRreader(path).then((x) => {
           //  Alert.alert(data);
           if (x === undefined || x.length === 0) {
             this.setState({
@@ -179,7 +179,7 @@ export default class QRScanGalleryScreen extends React.Component {
           db.transaction(tx => {
             tx.executeSql('INSERT INTO QRS(type, value) VALUES(?, ?)', [type, sendtext], (tx, res) => { }, () => { });
           });
-      //  });
+        });
       }
       else {
         this.props.navigation.setParams({
