@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity, CameraRoll, ToastAndroid, Alert, PermissionsAndroid } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ToastAndroid, Alert, PermissionsAndroid } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Image from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
-import RNFetchBlob from 'rn-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob';
+import CameraRoll from '@react-native-community/cameraroll';
 
 export default class QRGeneratorScreen extends React.Component {
 
@@ -52,23 +53,30 @@ export default class QRGeneratorScreen extends React.Component {
                         var text = this.state.text;
                         if (text != "") {
                             PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE).then((res) => {
+                                console.log(res);
                                 if (res == 'granted') {
-                                    RNFetchBlob
-                                        .config({
-                                            path: RNFetchBlob.fs.dirs.CacheDir + '/qr.jpg'
-                                        })
-                                        .fetch('GET', "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + text)
-                                        .then((res) => {
-                                            CameraRoll.saveToCameraRoll(res.path());
-                                            ToastAndroid.show("Downloaded", ToastAndroid.SHORT);
-                                        });
+                                    try{
+                                        RNFetchBlob
+                                            .config({
+                                                path: RNFetchBlob.fs.dirs.CacheDir + '/qr.jpg'
+                                            })
+                                            .fetch('GET', "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + text)
+                                            .then((resp) => {
+                                                console.log(resp.path());
+                                                CameraRoll.saveToCameraRoll('file://' + resp.path());
+                                                ToastAndroid.show("Downloaded", ToastAndroid.SHORT);
+                                            }).catch((e) => console.log(e));
+                                        console.log('file://' + resp.path());
+                                    }
+                                    catch(e){
+                                        console.log(e);
+                                    }
                                 }
                             });
                         }
                     }}
                 >
                     <Image
-
                         source={{ uri: this.state.text != "" ? ("https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + this.state.text) : "a" }}
                         //onLoadStart={(e) => {console.log("https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + this.state.text)}}
                         indicator={ProgressBar}
@@ -81,9 +89,4 @@ export default class QRGeneratorScreen extends React.Component {
         );
     }
 
-}
-
-
-function getPerm() {
-    Per.request('storage');
 }

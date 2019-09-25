@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, ScrollView, ToastAndroid, Linking, PermissionsAndroid, Alert, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { QRreader } from 'react-native-qr-scanner';
-import ImagePicker from 'react-native-image-picker';
 import SQLite from 'react-native-sqlite-2';
 const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 import AutoLink from 'react-native-autolink';
@@ -44,13 +43,8 @@ export default class QRScanGalleryScreen extends React.Component {
     };
   };
 
-  _pickimg = async () => {
-    await ImagePicker.launchImageLibrary({}, (res) => {
-      if (res.uri) {
-        var path = res.path;
-        if (!path) {
-          path = res.uri;
-        }
+  _pickimg = async (path) => {
+      if (path != null && path != '') {
         QRreader(path).then((x) => {
           //  Alert.alert(data);
           if (x === undefined || x.length === 0) {
@@ -191,11 +185,12 @@ export default class QRScanGalleryScreen extends React.Component {
           text: "No image was selected!"
         });
       }
-    });
   }
 
   componentDidMount() {
-    this._pickimg();
+    console.log('**********')
+    console.log(this.props.navigation.getParam('path'));
+    this._pickimg(this.props.navigation.getParam('path'));
     /*
     else if(!this.isCancelled){
       var text = jsQR(res);

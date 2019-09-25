@@ -61,7 +61,7 @@ export default class HistoryScreen extends React.Component {
                         return (
                             <View style={{ marginVertical: 3, marginHorizontal: 2 }}>
                                 <View style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', backgroundColor: 'rgba(180, 180, 250, 0.3)' }}>
-                                    <Text style={{ color: "red", fontSize: 30, paddingBottom: 12, paddingTop: 10, fontFamily: 'sans-serif-light' }}>{item.type}</Text>
+                                    <Text style={{ color: "red", fontSize: 24, paddingBottom: 8, paddingTop: 6, fontFamily: 'sans-serif-light' }}>{item.type}</Text>
                                     <Icon style={{ position: 'absolute', right: 8 }} name="delete" size={26}
                                         onPress={() => {
                                             db.transaction((tx) => {

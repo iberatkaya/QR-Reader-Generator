@@ -1,4 +1,6 @@
-import { createStackNavigator, createAppContainer, createDrawerNavigator, DrawerItems } from 'react-navigation';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator, DrawerNavigatorItems} from 'react-navigation-drawer';
 import React from "react";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View, Text, Dimensions, FlatList, TouchableOpacity, Linking, Alert, Image, ScrollView, } from "react-native";
@@ -56,7 +58,7 @@ const DrawNavigator = createDrawerNavigator({
           style={{ width: width * 0.8, height: height * 0.25 }}
         />
         <ScrollView>
-          <DrawerItems {...props}
+          <DrawerNavigatorItems {...props}
             activeLabelStyle={{ color: 'black' }}
           />
           <TouchableOpacity
@@ -66,6 +68,24 @@ const DrawNavigator = createDrawerNavigator({
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon name="star" size={24} color="#888888" />
               <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Rate App</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+            onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator_pro"); }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name="google-play" size={24} color="#888" />
+              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Ad Free Version</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+            onPress={() => { Linking.openURL("https://play.google.com/store/apps/developer?id=IBK+Apps"); }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name="google-play" size={24} color="#888" />
+              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>View Other Apps</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity

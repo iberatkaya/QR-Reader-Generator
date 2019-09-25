@@ -20,7 +20,6 @@ export default class SettingsScreen extends React.Component {
     };
 
     _storeData = async (choise) => {
-        console.log(choise);
         try {
             await AsyncStorage.setItem('ShowHint', choise);
         } catch (error) {

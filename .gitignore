@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+/screens/appid.js
+/android/app/src/main/AndroidManifest.xml
+
 # Xcode
 #
 build/

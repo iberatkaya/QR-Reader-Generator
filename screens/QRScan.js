@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Dimensions, PermissionsAndroid, Image } f
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RNCamera } from 'react-native-camera';
 import AsyncStorage from '@react-native-community/async-storage';
+import ImagePicker from 'react-native-image-picker';
 
 var { width, height } = Dimensions.get('screen');
 
@@ -22,10 +23,15 @@ export default class QRScanScreen extends React.Component {
         <TouchableOpacity
           onPress={async () => {
             //getRollPerm(); implement
-            await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE).then((res) => {
-              if (res == 'granted')
-                navigate("QRScanGallery");
-            });
+            const res = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+            console.log(res)
+            if (res == 'granted') {
+              ImagePicker.launchImageLibrary({}, (resp) => {
+                console.log(resp)
+                if (!resp.didCancel)
+                  navigate("QRScanGallery", { path: resp.path });
+              });
+            }
           }}
           style={{ paddingRight: 12 }}
         >
@@ -53,9 +59,6 @@ export default class QRScanScreen extends React.Component {
 
   componentDidMount() {
     this._retrieveData().then((value) => {
-      console.log("value");
-      console.log(value);
-      console.log("value");
       this.setState({ showHint: value });
       //  console.log("mount " + value);
     });
@@ -335,7 +338,6 @@ export default class QRScanScreen extends React.Component {
           onPress={() => {
             this.setState({ overlaycolor: 'white', text: "", opacity: 0 }, () => {
               var text = this.state.sendtext;
-              console.log(text);
               this.props.navigation.navigate("QRScanResult", { textvalue: this.state.displaytext, type: this.state.type, icon: this.state.icon, obj: this.state.sendobj });
             });
           }} >
