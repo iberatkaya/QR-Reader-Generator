@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SQLite from 'react-native-sqlite-2';
 const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 import SplashScreen from 'react-native-splash-screen';
-import { adunitid, myappid } from './appid';
+import { adunitid, myappid,demointerstitial } from './appid';
 import { AdMobInterstitial } from 'react-native-androide';
 
 var showad = 0;
@@ -37,10 +37,8 @@ export default class HomeScreen extends React.Component {
       tx.executeSql('CREATE TABLE IF NOT EXISTS QRS (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, value TEXT);', [], (tx, res) => { }, () => { });
     });
     SplashScreen.hide();
-    await AdMobInterstitial.setAdUnitID(adunitid);
+    await AdMobInterstitial.setAdUnitID(demointerstitial);
     await AdMobInterstitial.requestAd();
-/*    const isHermes = () => global.HermesInternal != null;
-    console.log(isHermes());*/
   }
 
 
@@ -54,7 +52,7 @@ export default class HomeScreen extends React.Component {
             onPress={async () => {
               showad++;
               if (showad == 2 || showad == 5 || showad == 8)
-              AdMobInterstitial.showAd();
+                AdMobInterstitial.showAd();
               await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA).then((res) => {
                 if (res == 'granted')
                   this.props.navigation.navigate("QRScan");

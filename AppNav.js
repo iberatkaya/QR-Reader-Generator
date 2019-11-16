@@ -1,8 +1,9 @@
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import {createDrawerNavigator, DrawerNavigatorItems} from 'react-navigation-drawer';
+import {createDrawerNavigator} from 'react-navigation-drawer';
 import React from "react";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FIcon from 'react-native-vector-icons/FontAwesome5';
 import { View, Text, Dimensions, FlatList, TouchableOpacity, Linking, Alert, Image, ScrollView, } from "react-native";
 import HomeScreen from './screens/Home';
 import QRScanScreen from './screens/QRScan';
@@ -33,34 +34,36 @@ const DrawNavigator = createDrawerNavigator({
       drawerIcon: () => <Icon name="home" size={24} color="#444444" />,
       drawerLabel: "Home"
     },
-  },
-  History: {
-    screen: createStackNavigator({ HistoryScreen }),
-    navigationOptions: {
-      drawerIcon: () => <Icon name="history" size={24} color="#444444" />,
-      drawerLabel: "History"
-    }
-  },
-  Settings: {
-    screen: createStackNavigator({ SettingsScreen }),
-    navigationOptions: {
-      drawerIcon: () => <Icon name="settings" size={24} color="#444444" />,
-      drawerLabel: "Settings"
-    }
-  },
+  }
 },
   {
     drawerWidth: width * 0.8,
     contentComponent: (props) => (
-      <View>
+      <ScrollView>
         <Image
           source={require('./assets/qrflogo.png')}
           style={{ width: width * 0.8, height: height * 0.25 }}
         />
-        <ScrollView>
-          <DrawerNavigatorItems {...props}
-            activeLabelStyle={{ color: 'black' }}
-          />
+        <View>
+          
+        <TouchableOpacity
+            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+            onPress={() => { props.navigation.navigate("History") }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name="history" size={24} color="#888" />
+              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>History</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+            onPress={() => { props.navigation.navigate("Settings") }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name="settings" size={24} color="#888" />
+              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Settings</Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={{ paddingLeft: 16, paddingBottom: 13, paddingTop: 10 }}
             onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator"); }}
@@ -75,7 +78,7 @@ const DrawNavigator = createDrawerNavigator({
             onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator_pro"); }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="google-play" size={24} color="#888" />
+              <FIcon name="ad" size={24} color="#888" />
               <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Ad Free Version</Text>
             </View>
           </TouchableOpacity>
@@ -106,8 +109,8 @@ const DrawNavigator = createDrawerNavigator({
               <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Help</Text>
             </View>
           </TouchableOpacity>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     )
   }
 );

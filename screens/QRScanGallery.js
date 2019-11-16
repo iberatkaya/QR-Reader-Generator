@@ -188,8 +188,6 @@ export default class QRScanGalleryScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log('**********')
-    console.log(this.props.navigation.getParam('path'));
     this._pickimg(this.props.navigation.getParam('path'));
     /*
     else if(!this.isCancelled){

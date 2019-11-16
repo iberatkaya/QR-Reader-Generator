@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Dimensions, PermissionsAndroid, Image } from "react-native";
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Dimensions, PermissionsAndroid, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RNCamera } from 'react-native-camera';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -24,10 +24,8 @@ export default class QRScanScreen extends React.Component {
           onPress={async () => {
             //getRollPerm(); implement
             const res = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
-            console.log(res)
             if (res == 'granted') {
               ImagePicker.launchImageLibrary({}, (resp) => {
-                console.log(resp)
                 if (!resp.didCancel)
                   navigate("QRScanGallery", { path: resp.path });
               });
@@ -44,7 +42,6 @@ export default class QRScanScreen extends React.Component {
   _retrieveData = async () => {
     try {
       value = await AsyncStorage.getItem('ShowHint');
-      console.log(value);
       if (value !== null) {
         return value;
       }
@@ -200,7 +197,7 @@ export default class QRScanScreen extends React.Component {
   render() {
     //getPerm();
     return (
-      <RNCamera style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+      <RNCamera style={{ flex: 1, justifyContent: 'center' }}
         captureAudio={false}
         onBarCodeRead={(obj) => {
           //console.log(obj.data);
@@ -329,22 +326,30 @@ export default class QRScanScreen extends React.Component {
       >
 
         <Image source={require("../assets/cameraoverlaythin.png")}
-          style={{ position: 'absolute', resizeMode: 'contain', tintColor: this.state.overlaycolor }}
+          style={{ position: 'absolute', alignSelf: 'center', resizeMode: 'contain', tintColor: this.state.overlaycolor }}
           width={width * 0.95}
           height={height * 0.95}
         />
-
-        <TouchableOpacity
-          onPress={() => {
-            this.setState({ overlaycolor: 'white', text: "", opacity: 0 }, () => {
-              var text = this.state.sendtext;
-              this.props.navigation.navigate("QRScanResult", { textvalue: this.state.displaytext, type: this.state.type, icon: this.state.icon, obj: this.state.sendobj });
-            });
-          }} >
-          <View style={{ backgroundColor: "rgba(250, 120, 120, 0.4)", opacity: this.state.opacity, marginTop: 100, padding: 12, borderRadius: 16, maxHeight: 250, maxWidth: 220, overflow: 'hidden' }} >
-            <Text style={{ fontSize: 18, color: '#000000' }}>{this.state.displaytext}</Text>
+        {this.state.opacity != 0 ?
+          <View
+            style={{ position:'absolute', alignSelf: 'center', backgroundColor: "rgba(250, 120, 120, 0.4)", maxWidth: 200, maxHeight: 180, padding: 8, borderRadius: 16, overflow: 'hidden' }}
+          >
+            <ScrollView>
+              <Text
+                onPress={() => {
+                  let str = this.state.displaytext;
+                  this.setState({ overlaycolor: 'white', text: "", displaytext: "", opacity: 0 }, () => {
+                    this.props.navigation.navigate("QRScanResult", { textvalue: str, type: this.state.type, icon: this.state.icon, obj: this.state.sendobj });
+                  });
+                }}
+                style={{ fontSize: 18, color: '#000000' }}>
+                {this.state.displaytext}
+              </Text>
+            </ScrollView>
           </View>
-        </TouchableOpacity>
+          :
+          <View />
+        }
       </RNCamera>
     );
   };

@@ -4,6 +4,10 @@
 
 /screens/appid.js
 /android/app/src/main/AndroidManifest.xml
+android/app/key.jks
+android/app/google-services.json
+android/gradle.properties
+android/key.properties
 
 # Xcode
 #

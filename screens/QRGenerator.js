@@ -53,7 +53,6 @@ export default class QRGeneratorScreen extends React.Component {
                         var text = this.state.text;
                         if (text != "") {
                             PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE).then((res) => {
-                                console.log(res);
                                 if (res == 'granted') {
                                     try{
                                         RNFetchBlob
@@ -62,11 +61,9 @@ export default class QRGeneratorScreen extends React.Component {
                                             })
                                             .fetch('GET', "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + text)
                                             .then((resp) => {
-                                                console.log(resp.path());
                                                 CameraRoll.saveToCameraRoll('file://' + resp.path());
                                                 ToastAndroid.show("Downloaded", ToastAndroid.SHORT);
                                             }).catch((e) => console.log(e));
-                                        console.log('file://' + resp.path());
                                     }
                                     catch(e){
                                         console.log(e);

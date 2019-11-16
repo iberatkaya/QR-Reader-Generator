@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Text, View, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
+import { FlatList, ScrollView, Text, View, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
 import SQLite from 'react-native-sqlite-2';
 const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 import { NavigationEvents } from 'react-navigation';
@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 var checkdb = true;
 
-export default class HistoryScreen extends React.Component {
+export default class HistoryScreen extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -23,22 +23,22 @@ export default class HistoryScreen extends React.Component {
         headerTintColor: '#fff',
     });
 
+    componentDidMount(){
+        db.transaction((tx) => {
+            tx.executeSql('SELECT * FROM QRS', [], (tx, res) => {
+                var len = res.rows.length;
+                var arr = [];
+                for (let i = 0; i < len; i++) {
+                    arr.push(res.rows.item(i));
+                }
+                this.setState({ hisdata: arr.reverse() });
+            });
+        });
+    }
 
     render() {
         return (
-            <View>
-                <NavigationEvents onDidFocus={() => {
-                    db.transaction((tx) => {
-                        tx.executeSql('SELECT * FROM QRS', [], (tx, res) => {
-                            var len = res.rows.length;
-                            var arr = [];
-                            for (let i = 0; i < len; i++) {
-                                arr.push(res.rows.item(i));
-                            }
-                            this.setState({ hisdata: arr.reverse() });
-                        });
-                    });
-                }} />
+            <ScrollView>
                 <View style={{ backgroundColor: 'lightblue', alignItems: 'center', paddingVertical: 8 }}>
                     <TouchableOpacity
                         onPress={() => {
@@ -59,37 +59,26 @@ export default class HistoryScreen extends React.Component {
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => {
                         return (
-                            <View style={{ marginVertical: 3, marginHorizontal: 2 }}>
-                                <View style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', backgroundColor: 'rgba(180, 180, 250, 0.3)' }}>
-                                    <Text style={{ color: "red", fontSize: 24, paddingBottom: 8, paddingTop: 6, fontFamily: 'sans-serif-light' }}>{item.type}</Text>
-                                    <Icon style={{ position: 'absolute', right: 8 }} name="delete" size={26}
-                                        onPress={() => {
-                                            db.transaction((tx) => {
-                                                //    console.log('DELETE FROM QRS WHERE id = ' + item.id);
-                                                tx.executeSql('DELETE FROM QRS WHERE id = ' + item.id, [], (tx, res) => {
-                                                    ToastAndroid.show("Deleted", ToastAndroid.SHORT);
-                                                });
-                                                tx.executeSql('SELECT * FROM QRS', [], (tx, res) => {
-                                                    var len = res.rows.length;
-                                                    var arr = [];
-                                                    for (let i = 0; i < len; i++) {
-                                                        arr.push(res.rows.item(i));
-                                                    }
-                                                    this.setState({ hisdata: arr.reverse() });
-                                                    //        console.log(res.rows._array);
-                                                });
-                                            });
-                                        }}
-                                    />
-                                </View>
-                                <View style={{ borderBottomLeftRadius: 12, borderBottomRightRadius: 12, paddingHorizontal: 8, paddingTop: 12, paddingBottom: 14, backgroundColor: 'rgba(250, 180, 180, 0.3)' }}>
-                                    <AutoLink style={{ fontSize: 19, color: 'black' }} text={item.value} />
-                                </View>
-                            </View>
+                            <MyListItem item={item} />
                         );
                     }}
                 />
-            </View>
+            </ScrollView>
         );
     }
 }
+
+class MyListItem extends React.PureComponent {
+    render() {
+      return (
+        <View style={{ marginVertical: 3, marginHorizontal: 2 }}>
+            <View style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', backgroundColor: 'rgba(180, 180, 250, 0.3)' }}>
+                <Text style={{ color: "red", fontSize: 24, paddingBottom: 8, paddingTop: 6, fontFamily: 'sans-serif-light' }}>{this.props.item.type}</Text>
+            </View>
+            <View style={{ borderBottomLeftRadius: 12, borderBottomRightRadius: 12, paddingHorizontal: 8, paddingTop: 12, paddingBottom: 14, backgroundColor: 'rgba(250, 180, 180, 0.3)' }}>
+                <AutoLink style={{ fontSize: 19, color: 'black' }} text={this.props.item.value} />
+            </View>
+        </View>
+      )
+    }
+  }
