@@ -65,7 +65,7 @@ const DrawNavigator = createDrawerNavigator({
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{ paddingLeft: 16, paddingBottom: 13, paddingTop: 10 }}
+            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
             onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator"); }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
