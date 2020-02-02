@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ToastAndroid, Alert, StatusBar, PermissionsAndroid } from "react-native";
+import { View, Text, TouchableOpacity, ToastAndroid, Alert, StatusBar, PermissionsAndroid, Platform } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SQLite from 'react-native-sqlite-2';
 const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 import SplashScreen from 'react-native-splash-screen';
 import { adunitid, myappid,demointerstitial } from './appid';
-import { AdMobInterstitial } from 'react-native-androide';
+import { AdMobInterstitial } from 'react-native-admob';
 
 var showad = 0;
 
@@ -37,7 +37,7 @@ export default class HomeScreen extends React.Component {
       tx.executeSql('CREATE TABLE IF NOT EXISTS QRS (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, value TEXT);', [], (tx, res) => { }, () => { });
     });
     SplashScreen.hide();
-    await AdMobInterstitial.setAdUnitID(adunitid);
+    await AdMobInterstitial.setAdUnitID(demointerstitial);
     await AdMobInterstitial.requestAd();
   }
 
@@ -53,13 +53,17 @@ export default class HomeScreen extends React.Component {
               showad++;
               if (showad == 2 || showad == 5 || showad == 8)
                 AdMobInterstitial.showAd();
-              await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA).then((res) => {
-                if (res == 'granted')
-                  this.props.navigation.navigate("QRScan");
-              });
+              if(Platform.OS === "android"){
+                await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA).then((res) => {
+                  if (res == 'granted')
+                    this.props.navigation.navigate("QRScan");
+                });
+              }
+              else
+                this.props.navigation.navigate("QRScan");
             }}>
             <View style={{ alignItems: 'center', paddingBottom: 20, justifyContent: 'center', flex: 1 }}>
-              <Text style={{ color: 'white', fontSize: 50, paddingBottom: 12, fontFamily: 'sans-serif-light' }}>Scan</Text>
+              <Text style={{ color: 'white', fontSize: 50, paddingBottom: 12, fontFamily: Platform.OS === "android" ? 'sans-serif-light' : "Helvetica" }}>Scan</Text>
               <Icon name='qrcode-scan' size={64} color="#333333" />
             </View>
           </TouchableOpacity>
@@ -73,7 +77,7 @@ export default class HomeScreen extends React.Component {
               this.props.navigation.navigate("QRGenerator");
             }}>
             <View style={{ alignItems: 'center', paddingBottom: 20, justifyContent: 'center', flex: 1 }}>
-              <Text style={{ color: 'white', fontSize: 44, paddingBottom: 10, fontFamily: 'sans-serif-light' }}>Generate</Text>
+              <Text style={{ color: 'white', fontSize: 44, paddingBottom: 10, fontFamily: Platform.OS === "android" ? 'sans-serif-light' : "Helvetica" }}>Generate</Text>
               <Icon name='qrcode' size={68} color="#333333" />
             </View>
           </TouchableOpacity>
