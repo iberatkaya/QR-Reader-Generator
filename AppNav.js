@@ -4,7 +4,7 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import React from "react";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
-import { View, Text, Dimensions, FlatList, TouchableOpacity, Linking, Alert, Image, ScrollView, } from "react-native";
+import { View, Text, Dimensions, FlatList, TouchableOpacity, Linking, Alert, Image, ScrollView, Platform, } from "react-native";
 import HomeScreen from './screens/Home';
 import QRScanScreen from './screens/QRScan';
 import QRScanResultScreen from './screens/QRScanResult';
@@ -73,15 +73,19 @@ const DrawNavigator = createDrawerNavigator({
               <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Rate App</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
-            onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator_pro"); }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <FIcon name="ad" size={24} color="#888" />
-              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Ad Free Version</Text>
-            </View>
-          </TouchableOpacity>
+          {
+            Platform.OS === "android" ?
+            <TouchableOpacity
+              style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+              onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator_pro"); }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <FIcon name="ad" size={24} color="#888" />
+                <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Ad Free Version</Text>
+              </View>
+            </TouchableOpacity>
+            : <View/>
+          }
           <TouchableOpacity
             style={{ paddingLeft: 16, paddingVertical: 14.5 }}
             onPress={() => { Linking.openURL("https://play.google.com/store/apps/developer?id=IBK+Apps"); }}

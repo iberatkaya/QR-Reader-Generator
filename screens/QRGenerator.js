@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity, ToastAndroid, Alert, PermissionsAndroid, Platform } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Toast from 'react-native-root-toast';
 import Image from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -81,7 +82,7 @@ export default class QRGeneratorScreen extends React.Component {
                                         .fetch('GET', "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + text)
                                         .then((resp) => {
                                             CameraRoll.saveToCameraRoll('file://' + resp.path());
-                                            ToastAndroid.show("Downloaded", ToastAndroid.SHORT);
+                                            Toast.show("Downloaded");
                                         }).catch((e) => console.log(e));
                                 }
                                 catch(e){

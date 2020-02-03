@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Dimensions, PermissionsAndroid, Image } from "react-native";
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Dimensions, PermissionsAndroid, Image, Platform } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import { RNCamera } from 'react-native-camera';
 import AsyncStorage from '@react-native-community/async-storage';
 import ImagePicker from 'react-native-image-picker';
@@ -19,23 +20,35 @@ export default class QRScanScreen extends React.Component {
       title: 'Scan',
       headerStyle: { backgroundColor: 'skyblue', elevation: 2 },
       headerTintColor: '#fff',
-      headerRight: (
+      headerRight: Platform.OS === "android" ? (
         <TouchableOpacity
           onPress={async () => {
             //getRollPerm(); implement
-            const res = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
-            if (res == 'granted') {
-              ImagePicker.launchImageLibrary({}, (resp) => {
-                if (!resp.didCancel)
-                  navigate("QRScanGallery", { path: resp.path });
-              });
+            if(Platform.OS === "android"){
+              const res = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+              if (res == 'granted') {
+                ImagePicker.launchImageLibrary({}, (resp) => {
+                  if (!resp.didCancel)
+                    navigate("QRScanGallery", { path: resp.path });
+                });
+              }
+            }
+            else{
+              const res = await request(PERMISSIONS.IOS.PHOTO_LIBRARY)
+                if(res === "granted"){
+                  ImagePicker.launchImageLibrary({}, (resp) => {
+                    console.log(resp.uri)
+                    if (!resp.didCancel)
+                      navigate("QRScanGallery", { path: resp.uri.replace("file://", "") });
+                });
+              }
             }
           }}
           style={{ paddingRight: 12 }}
         >
           <Icon name="image" size={32} color="#ffffff" />
         </TouchableOpacity>
-      )
+      ) : (<View/>)
     }
   }
 

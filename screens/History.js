@@ -51,7 +51,7 @@ export default class HistoryScreen extends React.PureComponent {
                             });
                         }}
                     >
-                        <Text style={{ color: 'white', fontSize: 21, fontFamily: 'sans-serif-light' }}>Clear History</Text>
+                        <Text style={{ color: 'white', fontSize: 21, fontFamily: Platform.OS === "android" ? 'sans-serif-light' : "Helvetica" }}>Clear History</Text>
                     </TouchableOpacity>
                 </View>
                 <FlatList
@@ -73,7 +73,7 @@ class MyListItem extends React.PureComponent {
       return (
         <View style={{ marginVertical: 3, marginHorizontal: 2 }}>
             <View style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', backgroundColor: 'rgba(180, 180, 250, 0.3)' }}>
-                <Text style={{ color: "red", fontSize: 24, paddingBottom: 8, paddingTop: 6, fontFamily: 'sans-serif-light' }}>{this.props.item.type}</Text>
+                <Text style={{ color: "red", fontSize: 24, paddingBottom: 8, paddingTop: 6, fontFamily: Platform.OS === "android" ? 'sans-serif-light' : "Helvetica" }}>{this.props.item.type}</Text>
             </View>
             <View style={{ borderBottomLeftRadius: 12, borderBottomRightRadius: 12, paddingHorizontal: 8, paddingTop: 12, paddingBottom: 14, backgroundColor: 'rgba(250, 180, 180, 0.3)' }}>
                 <AutoLink style={{ fontSize: 19, color: 'black' }} text={this.props.item.value} />

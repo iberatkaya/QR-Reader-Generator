@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, ToastAndroid, Linking, PermissionsAndroid, Alert, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, ToastAndroid, Linking, PermissionsAndroid, Alert, TouchableOpacity, Platform } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { QRreader } from 'react-native-qr-scanner';
 import SQLite from 'react-native-sqlite-2';
@@ -44,6 +44,7 @@ export default class QRScanGalleryScreen extends React.Component {
   };
 
   _pickimg = async (path) => {
+      console.log(path)
       if (path != null && path != '') {
         QRreader(path).then((x) => {
           //  Alert.alert(data);
@@ -188,6 +189,7 @@ export default class QRScanGalleryScreen extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.navigation.getParam('path'))
     this._pickimg(this.props.navigation.getParam('path'));
     /*
     else if(!this.isCancelled){
@@ -327,7 +329,7 @@ export default class QRScanGalleryScreen extends React.Component {
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1, alignItems: "stretch" }}>
           <View style={{ flex: 0.3, backgroundColor: "rgba(180, 180, 250, 0.3)", alignItems: 'center' }}>
-            <Text style={{ color: "red", fontSize: 39, paddingBottom: 2, paddingTop: 6, fontFamily: 'sans-serif-light' }}>{this.state.type}</Text>
+            <Text style={{ color: "red", fontSize: 39, paddingBottom: 2, paddingTop: 6, fontFamily: Platform.OS === "android" ? 'sans-serif-light' : "Helvetica" }}>{this.state.type}</Text>
             <TouchableOpacity onPress={async () => {
               var obj = this.state.obj;
               if (this.state.type == "Event") {

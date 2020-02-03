@@ -1,8 +1,10 @@
 import React from "react";
-import { View, Text, ScrollView, Alert, TouchableOpacity, ToastAndroid, PermissionsAndroid, Linking } from "react-native";
+import { View, Text, ScrollView, Alert, TouchableOpacity, ToastAndroid, PermissionsAndroid, Linking, Platform } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AutoLink from 'react-native-autolink';
+import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import RNCalendarEvents from 'react-native-calendar-events';
+import Toast from 'react-native-root-toast';
 import SQLite from 'react-native-sqlite-2';
 const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 
@@ -53,21 +55,33 @@ export default class QRScanResultScreen extends React.Component {
         return (
             <View style={{ flex: 1, alignItems: "stretch" }}>
                 <View style={{ flex: 0.3, backgroundColor: "rgba(180, 180, 250, 0.3)", alignItems: 'center' }}>
-                    <Text style={{ color: "red", fontSize: 39, paddingBottom: 2, paddingTop: 6, fontFamily: 'sans-serif-light' }}>{this.props.navigation.getParam('type')}</Text>
+                    <Text style={{ color: "red", fontSize: 39, paddingBottom: 2, paddingTop: 6, fontFamily: Platform.OS === "android" ? 'sans-serif-light' : "Helvetica" }}>{this.props.navigation.getParam('type')}</Text>
                     <TouchableOpacity onPress={async () => {
                         var obj = this.props.navigation.getParam('obj');
                         if (this.props.navigation.getParam('type') == "Event") {
-                            await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR).then((res) => {
-                                if (res == 'granted') {
+                            if(Platform.OS === "android"){
+                                await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR).then((res) => {
+                                    if (res == 'granted') {
+                                        this.createCalEv(obj).then((x) => {
+                                            ToastAndroid.show("Added to Calendar", ToastAndroid.SHORT)
+                                        }).catch((e) => {
+                                            ToastAndroid.show("Error. Couldn't add.", ToastAndroid.SHORT)
+                                        });
+                                    }
+                                    else
+                                        ToastAndroid.show("Permission not granted.", ToastAndroid.SHORT)
+                                });
+                            }
+                            else{
+                                const res = await request(PERMISSIONS.IOS.CALENDARS)
+                                if(res === "granted"){
                                     this.createCalEv(obj).then((x) => {
-                                        ToastAndroid.show("Added to Calendar", ToastAndroid.SHORT)
+                                        Toast.show("Added to Calendar")
                                     }).catch((e) => {
-                                        ToastAndroid.show("Error. Couldn't add.", ToastAndroid.SHORT)
+                                        Toast.show("Error. Couldn't add.")
                                     });
                                 }
-                                else
-                                    ToastAndroid.show("Permission not granted.", ToastAndroid.SHORT)
-                            });
+                            }
                         }
                         else if (this.props.navigation.getParam('type') == "Email")
                             Linking.openURL("mailto:" + obj.Email + "?subject=" + encodeURIComponent(obj.Subject).replace(/\(/g, "%28").replace(/\)/g, "%29").replace(/!/g, "%21").replace(/'/g, "%27").replace(/\*/g, "%2A") + "&body=" + encodeURIComponent(obj.Body).replace(/\(/g, "%28").replace(/\)/g, "%29").replace(/!/g, "%21").replace(/'/g, "%27").replace(/\*/g, "%2A"));

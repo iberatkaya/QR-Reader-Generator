@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ToastAndroid, Alert, StatusBar, Permissio
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SQLite from 'react-native-sqlite-2';
 const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import SplashScreen from 'react-native-splash-screen';
 import { adunitid, myappid,demointerstitial } from './appid';
 import { AdMobInterstitial } from 'react-native-admob';
@@ -59,8 +60,12 @@ export default class HomeScreen extends React.Component {
                     this.props.navigation.navigate("QRScan");
                 });
               }
-              else
-                this.props.navigation.navigate("QRScan");
+              else{
+                const res = await request(PERMISSIONS.IOS.CAMERA)
+                console.log(res)
+                if(res === "granted")
+                  this.props.navigation.navigate("QRScan");
+              }
             }}>
             <View style={{ alignItems: 'center', paddingBottom: 20, justifyContent: 'center', flex: 1 }}>
               <Text style={{ color: 'white', fontSize: 50, paddingBottom: 12, fontFamily: Platform.OS === "android" ? 'sans-serif-light' : "Helvetica" }}>Scan</Text>
