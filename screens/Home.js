@@ -5,7 +5,7 @@ import SQLite from 'react-native-sqlite-2';
 const db = SQLite.openDatabase("Scanned.db", '1.0', '', 1);
 import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import SplashScreen from 'react-native-splash-screen';
-import { adunitid, myappid,demointerstitial } from './appid';
+import { adunitid, myappid,demointerstitial, adunitidios } from './appid';
 import { AdMobInterstitial } from 'react-native-admob';
 
 var showad = 0;
@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component {
       tx.executeSql('CREATE TABLE IF NOT EXISTS QRS (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, value TEXT);', [], (tx, res) => { }, () => { });
     });
     SplashScreen.hide();
-    await AdMobInterstitial.setAdUnitID(demointerstitial);
+    await AdMobInterstitial.setAdUnitID(Platform.OS === 'android' ? adunitid : adunitidios);
     await AdMobInterstitial.requestAd();
   }
 

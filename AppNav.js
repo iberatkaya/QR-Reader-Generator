@@ -65,8 +65,8 @@ const DrawNavigator = createDrawerNavigator({
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
-            onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator"); }}
+            style={{ paddingLeft: 16, paddingVertical: 14.5 }}    
+            onPress={() => { Linking.openURL(Platform.OS === 'android' ? "https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator" : "itms-apps://itunes.apple.com/app/apple-store/id1498310082?mt=8"); }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon name="star" size={24} color="#888888" />
