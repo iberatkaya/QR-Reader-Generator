@@ -104,16 +104,21 @@ const DrawNavigator = createDrawerNavigator({
               <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Feedback</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
-            onPress={() => { Alert.alert("Help", "Click the scan button to scan a QR Code with your camera. You can click the icon below the text in the result screen to call or text a number, add an event etc.\n\nClick the generate button to generate a QR Code (requires internet connection). Click on the QR Code to download it."); }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="help-circle" size={24} color="#888888" />
-              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Help</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+          { Platform.OS === "android"
+            ?
+            <TouchableOpacity
+              style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+              onPress={() => { Alert.alert("Help", "Click the scan button to scan a QR Code with your camera. You can click the icon below the text in the result screen to call or text a number, add an event etc.\n\nClick the generate button to generate a QR Code (requires internet connection). Click on the QR Code to download it."); }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon name="help-circle" size={24} color="#888888" />
+                <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Help</Text>
+              </View>
+            </TouchableOpacity>
+          :
+            <View/>
+          }
+          </View>
       </ScrollView>
     )
   }
