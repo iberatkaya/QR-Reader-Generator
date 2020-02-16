@@ -5,7 +5,7 @@
 
 > QR Reader & Generator is a mobile app that can scan, generate, and download QR Codes.
 
-### 🏠 [Homepage](https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator)
+### 🏠 [Play Store](https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator) - [App Store](https://apps.apple.com/us/app/qr-reader-generator/id1498310082)
 
 ## Install
 
@@ -17,6 +17,7 @@ npm install
 
 ```sh
 react-native run-android
+react-native run-ios
 ```
 
 ## Author

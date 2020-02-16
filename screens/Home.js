@@ -86,7 +86,8 @@ export default class HomeScreen extends React.Component {
               <Icon name='qrcode' size={68} color="#333333" />
             </View>
           </TouchableOpacity>
-          {Platform.OS !== "android"
+          { 
+            Platform.OS !== "android"
             ?
             <TouchableOpacity
               style={{ flex: 0.2, backgroundColor: "rgba(180, 180, 180, 0.7)" }}
