@@ -11,6 +11,7 @@ android/key.properties
 
 # Xcode
 #
+ios/RNScanner.xcworkspace/xcshareddata/
 ios/Pods
 build/
 *.pbxuser
