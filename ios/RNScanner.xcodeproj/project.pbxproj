@@ -692,6 +692,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = QH78WN2XWN;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = RNScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -700,7 +701,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kaya.qr-reader-and-generator";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaya.qrreaderandgenerator;
 				PRODUCT_NAME = RNScanner;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -713,6 +714,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QH78WN2XWN;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = RNScanner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -721,7 +723,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kaya.qr-reader-and-generator";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaya.qrreaderandgenerator;
 				PRODUCT_NAME = RNScanner;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

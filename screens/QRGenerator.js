@@ -43,6 +43,8 @@ export default class QRGeneratorScreen extends React.Component {
                         fontSize: 18, padding: 8
                     }}
                     textAlignVertical="top"
+                    returnKeyType="done"
+                    blurOnSubmit={true}
                     multiline={true}
                     onChangeText={(edittext) => {
                         this.setState({ text: encodeURIComponent(edittext).replace(/\(/g, "%28").replace(/\)/g, "%29").replace(/!/g, "%21").replace(/'/g, "%27").replace(/\*/g, "%2A") });

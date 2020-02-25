@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component {
       tx.executeSql('CREATE TABLE IF NOT EXISTS QRS (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, value TEXT);', [], (tx, res) => { }, () => { });
     });
     SplashScreen.hide();
-    await AdMobInterstitial.setAdUnitID(Platform.OS === 'android' ? adunitid : demointerstitial);
+    await AdMobInterstitial.setAdUnitID(Platform.OS === 'android' ? adunitid : adunitidios);
     await AdMobInterstitial.requestAd();
   }
 

@@ -64,48 +64,45 @@ const DrawNavigator = createDrawerNavigator({
               <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Settings</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{ paddingLeft: 16, paddingVertical: 14.5 }}    
-            onPress={() => { Linking.openURL(Platform.OS === 'android' ? "https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator" : "itms-apps://itunes.apple.com/app/apple-store/id1498310082?mt=8"); }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="star" size={24} color="#888888" />
-              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Rate App</Text>
-            </View>
-          </TouchableOpacity>
           {
             Platform.OS === "android" ?
-            <TouchableOpacity
-              style={{ paddingLeft: 16, paddingVertical: 14.5 }}
-              onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator_pro"); }}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FIcon name="ad" size={24} color="#888" />
-                <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Ad Free Version</Text>
-              </View>
-            </TouchableOpacity>
-            : <View/>
-          }
-          <TouchableOpacity
-            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
-            onPress={() => { Linking.openURL("https://play.google.com/store/apps/developer?id=IBK+Apps"); }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="google-play" size={24} color="#888" />
-              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>View Other Apps</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ paddingLeft: 16, paddingVertical: 14.5 }}
-            onPress={() => { Linking.openURL("mailto:ibraberatkaya@gmail.com?subject=Feedback"); }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="email" size={24} color="#888888" />
-              <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Feedback</Text>
-            </View>
-          </TouchableOpacity>
-          { Platform.OS === "android"
-            ?
+              <View>
+              <TouchableOpacity
+                style={{ paddingLeft: 16, paddingVertical: 14.5 }}    
+                onPress={() => { Linking.openURL(Platform.OS === 'android' ? "https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator" : "itms-apps://itunes.apple.com/app/apple-store/id1498310082?mt=8"); }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon name="star" size={24} color="#888888" />
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Rate App</Text>
+                </View>
+              </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+                  onPress={() => { Linking.openURL("https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator_pro"); }}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <FIcon name="ad" size={24} color="#888" />
+                    <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Ad Free Version</Text>
+                  </View>
+                </TouchableOpacity>
+              <TouchableOpacity
+                style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+                onPress={() => { Linking.openURL("https://play.google.com/store/apps/developer?id=IBK+Apps"); }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon name="google-play" size={24} color="#888" />
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>View Other Apps</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{ paddingLeft: 16, paddingVertical: 14.5 }}
+                onPress={() => { Linking.openURL("mailto:ibraberatkaya@gmail.com?subject=Feedback"); }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon name="email" size={24} color="#888888" />
+                  <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Feedback</Text>
+                </View>
+              </TouchableOpacity>
             <TouchableOpacity
               style={{ paddingLeft: 16, paddingVertical: 14.5 }}
               onPress={() => { Alert.alert("Help", "Click the scan button to scan a QR Code with your camera. You can click the icon below the text in the result screen to call or text a number, add an event etc.\n\nClick the generate button to generate a QR Code (requires internet connection). Click on the QR Code to download it."); }}
@@ -115,8 +112,8 @@ const DrawNavigator = createDrawerNavigator({
                 <Text style={{ fontSize: 14, fontWeight: 'bold', paddingLeft: 32, color: 'black' }}>Help</Text>
               </View>
             </TouchableOpacity>
-          :
-            <View/>
+            </View>
+            : <View/>
           }
           </View>
       </ScrollView>
