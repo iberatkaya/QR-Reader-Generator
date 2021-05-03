@@ -3,7 +3,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-0.6.3-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> QR Reader & Generator is a mobile app that can scan, generate, and download QR Codes.
+QR Reader & Generator is a mobile app that can scan, generate, and download QR Codes.
 
 ### 🏠 [Play Store](https://play.google.com/store/apps/details?id=com.kaya.qr_reader_and_generator) - [App Store](https://apps.apple.com/us/app/qr-reader-generator/id1498310082)
 
