@@ -15,7 +15,7 @@
     "@react-native-community/async-storage": "^1.5.1",
     "@react-native-community/cameraroll": "^1.2.1",
     "react": "16.9.0",
-    "react-native": "0.61.4",
+    "react-native": "0.62.3",
     "react-native-admob": "^2.0.0-beta.6",
     "react-native-autolink": "^1.8.1",
     "react-native-calendar-events": "^1.7.3",
